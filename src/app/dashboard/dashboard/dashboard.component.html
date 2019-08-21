@@ -1,1 +1,24 @@
-<p>dashboard works!</p>
+<h2>Dashboard</h2>
+<div id="dashboard-top">
+  <div></div>
+  <app-dashboard-total [label]="'ACTIVE'" [value]="getSummary()?.active"></app-dashboard-total>
+  <app-dashboard-total [label]="'QUEUED'" [value]="getSummary()?.queued"></app-dashboard-total>
+  <app-dashboard-total [label]="'ON HOLD'" [value]="getSummary()?.hold"></app-dashboard-total>
+  <app-dashboard-total [label]="'TOTAL'" [value]="getSummary()?.active + getSummary()?.queued + getSummary()?.hold"></app-dashboard-total>
+  <section>
+    <button mat-flat-button color="primary" (click)="uploadSamples()">Upload Samples</button>
+    <div>
+      <a *ngIf="samples" (click)="resetSamples()" href="javascript:void(0)" id="clear-results-btn">Clear Results</a>
+    </div>
+  </section>
+</div>
+<hr>
+<ng-container *ngIf="samples">
+  <div id="dashboard-bottom">
+    <app-dashboard-chart [sampleSummary]="getSummary()" (stateSelected)="stateSelected($event)"></app-dashboard-chart>
+      <div id="dashboard-table-container">
+        <h3>List of Sample Sets / Batches</h3>
+        <app-dashboard-table [samples]="samples" [selectedState]="selectedState"></app-dashboard-table>
+      </div>
+  </div>
+</ng-container>

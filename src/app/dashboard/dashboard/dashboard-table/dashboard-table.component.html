@@ -1,0 +1,51 @@
+<mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+  
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <!-- Sample Number Column -->
+      <ng-container matColumnDef="sampleNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Sample&nbsp;# </th>
+        <td mat-cell *matCellDef="let row"> {{row.sampleNumber}} </td>
+      </ng-container>
+      
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+        <td mat-cell *matCellDef="let row"> <span class="row-identifier">{{row.id}}</span> </td>
+      </ng-container>
+  
+      <!-- State Column -->
+      <ng-container matColumnDef="state">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> State </th>
+        <td mat-cell *matCellDef="let row">
+          <ng-container [ngSwitch]="row.state">
+            <span *ngSwitchCase="'active'">Active</span>
+            <span *ngSwitchCase="'hold'">On Hold</span>
+            <span *ngSwitchCase="'queued'">Queued</span>
+          </ng-container> </td>
+      </ng-container>
+  
+      <!-- Type Column -->
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+        <td mat-cell *matCellDef="let row"> {{row.type}} </td>
+      </ng-container>
+  
+      <!-- Color Column -->
+      <ng-container matColumnDef="color">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
+        <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        [ngClass]="{'highlighted': selectedState === row.state, 'active': selectedState === 'active', 'hold': selectedState === 'hold', 'queued': selectedState === 'queued'}">
+      </tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+  
