@@ -1,0 +1,20 @@
+#dashboard-top {
+    display: flex;
+    justify-content: space-evenly;
+    align-content: flex-end;
+}
+
+#dashboard-bottom {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#clear-results-btn {
+    padding: 0 30px;
+    font-size: small;
+}
+
+#dashboard-table-container {
+    display: inline-block;
+    text-align: center;
+}
