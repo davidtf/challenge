@@ -1,5 +1,7 @@
 # Challenge
 
+Note that both the dashboard and Tic-Tac-Toe logic are present in this project. The dashboard is the "home" location, but Tic-Tac-Toe can be accessed via the side navigation panel.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.1.
 
 ## Development server

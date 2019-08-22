@@ -1,0 +1,79 @@
+<h3 *ngIf="!winner; else gameover">
+    Click board to make a move
+</h3>
+<ng-template #gameover>
+    <h3 [ngSwitch]="winner">
+        <ng-container *ngSwitchCase="'tie'">There is a Tie!</ng-container>
+        <ng-container *ngSwitchDefault>{{winner | uppercase}} Wins!</ng-container>
+    </h3>
+</ng-template>
+
+<svg [attr.height]="height" [attr.width]="width" id="gameboard">
+    <svg style="stroke:rgb(255,0,0);stroke-width:8">
+        <line
+            [attr.x1]="getGridFraction('x')"
+            y1="0"
+            [attr.x2]="getGridFraction('x')"
+            [attr.y2]="height"/>
+        <line
+            [attr.x1]="getGridFraction('x') * 2"
+            y1="0"
+            [attr.x2]="getGridFraction('x') * 2"
+            [attr.y2]="height"/>
+        <line
+            x1="0"
+            [attr.y1]="getGridFraction('y')"
+            [attr.x2]="width"
+            [attr.y2]="getGridFraction('y')"/>
+        <line
+            x1="0"
+            [attr.y1]="getGridFraction('y') * 2"
+            [attr.x2]="width"
+            [attr.y2]="getGridFraction('y') * 2"/>
+    </svg>
+    
+    <ng-container *ngFor="let move of moves; let i = index">
+        <svg [attr.x]="getGridFractionForPosition(i, 'x')" [attr.y]="getGridFractionForPosition(i, 'y')">
+            <ng-container [ngSwitch]="move">
+                <ng-container *ngSwitchCase="'o'">
+                    <ellipse
+                        [attr.cx]="(getGridFraction('x') / 2)"
+                        [attr.cy]="(getGridFraction('y') / 2)"
+                        [attr.rx]="(getGridFraction('x') / 2) - 10"
+                        [attr.ry]="(getGridFraction('y') / 2) - 10"
+                        stroke="black" stroke-width="6" fill="transparent" />
+                </ng-container>
+                <ng-container *ngSwitchCase="'x'">
+                    <line
+                        [attr.x1]="15"
+                        [attr.y1]="15"
+                        [attr.x2]="getGridFraction('x') - 15"
+                        [attr.y2]="getGridFraction('y') - 15"
+                        style="stroke:black;stroke-width:6" />
+                    <line
+                        [attr.x1]="15"
+                        [attr.y1]="getGridFraction('y') - 15"
+                        [attr.x2]="getGridFraction('x') - 15"
+                        [attr.y2]="15"
+                        style="stroke:black;stroke-width:6" />
+                </ng-container>
+            </ng-container>
+        </svg>
+    </ng-container>
+
+  <ng-container *ngFor="let x of [0, getGridFraction('x'), getGridFraction('x') * 2]; let i = index">
+    <ng-container *ngFor="let y of [0, getGridFraction('y'), getGridFraction('y') * 2]; let j = index">
+        <rect
+            [attr.width]="getGridFraction('x')"
+            [attr.height]="getGridFraction('y')"
+            [ngStyle]="{'fill':winner ? 'rgb(0,0,255,.6)' : 'rgb(0,0,255,.2)' }"
+            [attr.x]="x"
+            [attr.y]="y"
+            (click)="squareClicked(i + (j*3))"
+            id="square-{{i + (j*3)}}"/>
+    </ng-container>
+  </ng-container>
+
+    Sorry, your browser does not support inline SVG.
+  </svg>
+  <button (click)="resetBoard()" id="reset-btn">Reset Board</button>
