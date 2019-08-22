@@ -13,7 +13,7 @@ export class SampleService {
   constructor(private http: HttpClient) { }
 
   getSampleData(): Observable<SampleData[]> {
-    return this.http.get('/assets/sample.csv', {responseType: 'text'})
+    return this.http.get('./assets/sample.csv', {responseType: 'text'})
       .pipe(
         map(csvData => {
             const samples: SampleData[] = [];
