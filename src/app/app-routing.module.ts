@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(mod => mod.DashboardModule)},
+  {path: 'tictactoe', loadChildren: () => import('./tic-tac-toe/tic-tac-toe.module').then(mod => mod.TicTacToeModule)},
   {
     path: '',
     redirectTo: 'dashboard',
